@@ -8,6 +8,9 @@ import (
 	"sync"
 )
 
+const DEFAULT_CHANNEL_SIZE = 256
+const DEFAULT_NUM_OF_WORKERS = 10
+
 //
 // This is a thread-safe version of a map with request ID
 // as the key and the corresponding hashed password as the
@@ -107,10 +110,10 @@ func GetChannelSize() (int) {
 		i, err := strconv.ParseInt(csz, 10, 32)
 		if err != nil {
 			log.Printf("Invalid value of CHANNEL_SIZE %s", csz)
-			channelsize = 1024
+			channelsize = DEFAULT_CHANNEL_SIZE
 		} else {
 			if i < 256 {
-				channelsize = 256	
+				channelsize = 256
 			} else if (i > 16384) {
 				channelsize = 16384
 			} else {
@@ -118,7 +121,7 @@ func GetChannelSize() (int) {
 			}
 		}
 	} else {
-		channelsize = 1024
+		channelsize = DEFAULT_CHANNEL_SIZE
 	}
 
 	return channelsize
@@ -129,15 +132,15 @@ func GetNumOfWorkers() (int) {
 		return numofworker
 	}
 
-	nw := os.Getenv("NUM_OF_WORKER")
+	nw := os.Getenv("NUM_OF_WORKERS")
 	if nw != "" {
 		i, err := strconv.ParseInt(nw, 10, 32)
 		if err != nil {
-			log.Printf("Invalid value of NUM_OF_WORKER %s", nw)
-			numofworker = 10
+			log.Printf("Invalid value of NUM_OF_WORKERS %s", nw)
+			numofworker = DEFAULT_NUM_OF_WORKERS
 		} else {
 			if i < 10 {
-				numofworker = 10	
+				numofworker = 10
 			} else if (i > 100) {
 				numofworker = 100
 			} else {
@@ -145,7 +148,7 @@ func GetNumOfWorkers() (int) {
 			}
 		}
 	} else {
-		numofworker = 10
+		numofworker = DEFAULT_NUM_OF_WORKERS
 	}
 
 	return numofworker

@@ -13,6 +13,8 @@ import (
 	"time"
 )
 
+const RQST_SERVICE_TIME = 5
+
 type hashRequest struct {
 	id		int64
 	startTime       int64
@@ -31,8 +33,8 @@ func worker() {
 
 		// Wait if needed
 		now := time.Now().Unix()
-		if now < (hr.startTime + 5) {
-			time.Sleep(time.Duration(hr.startTime + 5 - now) * time.Second)
+		if now < (hr.startTime + RQST_SERVICE_TIME) {
+			time.Sleep(time.Duration(hr.startTime + RQST_SERVICE_TIME - now) * time.Second)
 		}
 
 		begin := time.Now()

@@ -123,6 +123,11 @@ func GetHash (w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	if id <= 0 {
+		http.Error(w, "Invalid request ID", http.StatusBadRequest);
+		return
+	}
+
 	// Find the ID in the map
 	hashstr, found := rqstMap.Get(id)
 	if !found {
